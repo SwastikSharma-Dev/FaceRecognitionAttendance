@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #cc7832;}
+.s3 { color: #6a8759;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Main.py</font>
+</center></td></tr></table>
+<pre><span class="s0"># SWASTIK SHARMA 102203231</span>
+<span class="s2">import </span><span class="s1">numpy </span><span class="s2">as </span><span class="s1">np</span>
+<span class="s2">import </span><span class="s1">pandas </span><span class="s2">as </span><span class="s1">pd</span>
+<span class="s2">import </span><span class="s1">matplotlib.pyplot </span><span class="s2">as </span><span class="s1">plt</span>
+<span class="s2">import </span><span class="s1">seaborn </span><span class="s2">as </span><span class="s1">sns</span>
+<span class="s0">#%matplotlib inline</span>
+<span class="s1">data_df = pd.read_csv(</span><span class="s3">&quot;data.csv&quot;</span><span class="s1">)</span>
+<span class="s0">#test_df = pd.read_csv(&quot;test.csv&quot;)</span>
+<span class="s1">data_df.head()</span>
+<span class="s1">data_df.shape</span>
+<span class="s1">y=data_df[</span><span class="s3">'label'</span><span class="s1">]</span>
+<span class="s1">x=data_df.drop(</span><span class="s3">'label'</span><span class="s2">,</span><span class="s1">axis=</span><span class="s4">1</span><span class="s1">)</span>
+<span class="s0">#x_for_test_data=test_df[:]</span>
+<span class="s1">type(x)</span>
+<span class="s1">plt.figure(figsize=(</span><span class="s4">7</span><span class="s2">,</span><span class="s4">7</span><span class="s1">))</span>
+<span class="s1">some_digit=</span><span class="s4">1266</span>
+<span class="s1">some_digit_image = x.iloc[some_digit].to_numpy()</span>
+<span class="s1">plt.imshow(np.reshape(some_digit_image</span><span class="s2">, </span><span class="s1">(</span><span class="s4">28</span><span class="s2">,</span><span class="s4">28</span><span class="s1">)))</span>
+<span class="s1">print(y[some_digit])</span>
+<span class="s1">sns.countplot( x=</span><span class="s3">'label'</span><span class="s2">, </span><span class="s1">data=data_df)</span>
+<span class="s2">from </span><span class="s1">sklearn.model_selection </span><span class="s2">import  </span><span class="s1">train_test_split</span>
+<span class="s1">x_train</span><span class="s2">, </span><span class="s1">x_test</span><span class="s2">, </span><span class="s1">y_train</span><span class="s2">, </span><span class="s1">y_test = train_test_split(x</span><span class="s2">, </span><span class="s1">y</span><span class="s2">, </span><span class="s1">test_size = </span><span class="s4">0.30</span><span class="s2">, </span><span class="s1">random_state = </span><span class="s4">40</span><span class="s1">)</span>
+<span class="s1">x_train.shape</span><span class="s2">,</span><span class="s1">y_train.shape</span><span class="s2">,</span><span class="s1">x_test.shape</span><span class="s2">,</span><span class="s1">y_test.shape</span>
+<span class="s0">#from sklearn.preprocessing import  StandardScaler</span>
+<span class="s0">#scaler = StandardScaler()</span>
+<span class="s0">#scaler.fit(x_train,y_train)</span>
+<span class="s0">#x_train = scaler.transform(x_train)</span>
+<span class="s0">#x_train.shape</span>
+<span class="s2">from </span><span class="s1">sklearn.neighbors </span><span class="s2">import </span><span class="s1">KNeighborsClassifier</span>
+<span class="s1">classifier = KNeighborsClassifier(n_neighbors = </span><span class="s4">10</span><span class="s1">)</span>
+<span class="s1">classifier.fit(x_train</span><span class="s2">, </span><span class="s1">y_train)</span>
+<span class="s1">y_pred = classifier.predict(x_test)</span>
+<span class="s1">y_pred</span>
+<span class="s2">from </span><span class="s1">sklearn.metrics </span><span class="s2">import </span><span class="s1">accuracy_score</span><span class="s2">,</span><span class="s1">classification_report</span><span class="s2">,</span><span class="s1">confusion_matrix</span>
+<span class="s1">print(accuracy_score(y_test</span><span class="s2">, </span><span class="s1">y_pred))</span>
+<span class="s1">print(</span><span class="s3">&quot;------------------------------------&quot;</span><span class="s1">)</span>
+<span class="s1">print(</span><span class="s3">&quot;Classification Report&quot;</span><span class="s1">)</span>
+<span class="s1">print(classification_report(y_test</span><span class="s2">, </span><span class="s1">y_pred))</span>
+<span class="s1">print(</span><span class="s3">&quot;------------------------------------&quot;</span><span class="s1">)</span>
+<span class="s1">print(</span><span class="s3">&quot;Confusion Matrix&quot;</span><span class="s1">)</span>
+<span class="s1">print(confusion_matrix(y_test</span><span class="s2">, </span><span class="s1">y_pred))</span>
+<span class="s1">print(</span><span class="s3">&quot;------------------------------------&quot;</span><span class="s1">)</span>
+<span class="s0">#y_pred_on_test_data = classifier.predict(x_for_test_data)</span>
+<span class="s0">#y_pred_on_test_data</span></pre>
+</body>
+</html>
